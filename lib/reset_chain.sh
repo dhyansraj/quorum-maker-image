@@ -1,7 +1,7 @@
 #!/bin/bash
 
 killall geth
-killall constellation-node
+killall java
 
 sleep 2
 

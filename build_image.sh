@@ -42,10 +42,11 @@ fi
 dockername=$dockerImage":"$tagname
 echo $CYAN"Building image, "$dockername"..."$COLOR_END
 
+mkdir -p staging
 lib/install_quorum.sh
 lib/install_tessera.sh
 lib/build_nodemanager.sh
 lib/build_ui.sh
 
 
-docker build -t $dockername .
+docker build --no-cache -t $dockername .

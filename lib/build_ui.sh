@@ -7,22 +7,22 @@ if [ ! -d "../quorum-maker-ui" ]; then
 	exit 1
 fi
 
-rm -rf quorum-maker-ui
-cp -r ../quorum-maker-ui quorum-maker-ui
+rm -rf staging/quorum-maker-ui
+cp -r ../quorum-maker-ui staging/quorum-maker-ui
 
-pushd quorum-maker-ui > /dev/null
+pushd staging/quorum-maker-ui > /dev/null
 
 branch=$(git branch | grep \* | cut -d ' ' -f2-)
 echo $CYAN"Building QM UI "$branch" ..."$COLOR_END
 popd > /dev/null
 
 docker run -it --rm \
-    -v $(pwd)/quorum-maker-ui/webApp:/quorum-maker-ui \
+    -v $(pwd)/staging/quorum-maker-ui/webApp:/quorum-maker-ui \
     -w /quorum-maker-ui \
     syneblock/cicd \
     /bin/sh -c 'npm install ; ng build --aot --base-href /qm --deploy-url /qm'
 
 ## Change the owneship of directory
-chownDir 'quorum-maker-ui'
+chownDir 'staging/quorum-maker-ui'
 
 echo $CYAN"Building QM UI "$branch" Completed."$COLOR_END
